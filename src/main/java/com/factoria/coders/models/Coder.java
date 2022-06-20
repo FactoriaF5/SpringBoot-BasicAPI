@@ -1,19 +1,23 @@
 package com.factoria.coders.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Controller;
+
+import javax.persistence.*;
+
+@Data
+@Entity
+@Table(name = "coder")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Coder {
-    private  String name = "coder1";
+    private  String name;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    public Long getId() {
-        return id;
-    }
 
-    public Coder(String name, Long id) {
-        this.name = name;
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
 }
