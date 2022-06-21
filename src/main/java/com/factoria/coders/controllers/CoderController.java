@@ -56,7 +56,7 @@ public class CoderController {
     }
 
     @PostMapping("/coders")
-    void createCoder(@RequestBody Coder coder) {
-        coderRepository.save(coder);
+    Coder createCoder(@RequestBody Coder coder) {
+        return coderRepository.save(coder);
     }
 }
