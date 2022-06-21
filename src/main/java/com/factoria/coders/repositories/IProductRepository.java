@@ -1,13 +1,12 @@
 package com.factoria.coders.repositories;
 
-import com.factoria.coders.models.Coder;
+import com.factoria.coders.models.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ICoderRepository extends JpaRepository<Coder, Long> {
-    Optional<Coder> findById(Long id);
+public interface IProductRepository extends JpaRepository<Product, Long> {
+    Optional<Product> findById(Long id);
 }
