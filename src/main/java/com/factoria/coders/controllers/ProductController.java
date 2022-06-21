@@ -57,4 +57,15 @@ public class ProductController {
     Product createCoder(@RequestBody Product product) {
         return productRepository.save(product);
     }
+
+    @PutMapping("/coders/{id}")
+    Product updateProduct (@PathVariable("id") Long id, @RequestBody Product product) {
+        var dBProduct = productRepository.findById(id);
+        if (dBProduct.isPresent()) {
+            product.setId(id);
+            productRepository.save(product);
+            return product;
+        }
+        return product;
+    }
 }
