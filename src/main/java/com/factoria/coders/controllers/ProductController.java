@@ -2,6 +2,8 @@ package com.factoria.coders.controllers;
 
 import com.factoria.coders.models.Product;
 import com.factoria.coders.repositories.IProductRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -59,13 +61,13 @@ public class ProductController {
     }
 
     @PutMapping("/coders/{id}")
-    Product updateProduct (@PathVariable("id") Long id, @RequestBody Product product) {
+    ResponseEntity<Product> updateProduct (@PathVariable("id") Long id, @RequestBody Product product) {
         var dBProduct = productRepository.findById(id);
         if (dBProduct.isPresent()) {
             product.setId(id);
             productRepository.save(product);
-            return product;
+            return new ResponseEntity<>(product, HttpStatus.OK);
         }
-        return product;
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
