@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 public class ProductController {
@@ -18,6 +17,7 @@ public class ProductController {
         this.productRepository = productRepository;
         var coder = new Product();
         coder.setName("hola");
+        coder.setDescription("esta es la descripción");
         productRepository.save(coder);
     }
 
@@ -47,13 +47,13 @@ public class ProductController {
         return coder;
     }
 
-//    @GetMapping("/coders/search")
-//    List<Product> search(@RequestParam("name") String search){
-//        System.out.println(search);
-//        var list = getCoderList();
-//        var filteredList = list.stream().filter(x->x.getName().toLowerCase().contains(search.toLowerCase())).collect(Collectors.toList());
-//        return filteredList;
-//    }
+    @GetMapping("/coders/search")
+    ResponseEntity<List<Product>> search(@RequestParam("name") String search){
+
+        var filteredList = productRepository.findByNameContainsOrDescriptionContainsAllIgnoreCase(search,search);
+        if (filteredList.size() == 0) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(filteredList, HttpStatus.OK);
+    }
 
     @PostMapping("/coders")
     Product createCoder(@RequestBody Product product) {
