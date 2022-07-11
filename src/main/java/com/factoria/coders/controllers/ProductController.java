@@ -1,7 +1,15 @@
 package com.factoria.coders.controllers;
 
+import com.factoria.coders.dtos.ProductRequestDto;
+import com.factoria.coders.dtos.ProductResponseDto;
+import com.factoria.coders.faker.Faker;
+import com.factoria.coders.models.Comment;
 import com.factoria.coders.models.Product;
+import com.factoria.coders.repositories.ICommentRepository;
 import com.factoria.coders.repositories.IProductRepository;
+import com.factoria.coders.services.IProductService;
+import com.factoria.coders.services.IUserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,13 +20,14 @@ import java.util.List;
 public class ProductController {
 
     private IProductRepository productRepository;
+    private IProductService productService;
 
-    public ProductController(IProductRepository productRepository) {
+    private IUserService userService;
+
+    public ProductController(IProductRepository productRepository, IProductService productService, IUserService userService) {
         this.productRepository = productRepository;
-        var coder = new Product();
-        coder.setName("hola");
-        coder.setDescription("esta es la descripción");
-        productRepository.save(coder);
+        this.productService = productService;
+        this.userService = userService;
     }
 
     @GetMapping("/hello")
@@ -26,7 +35,7 @@ public class ProductController {
         return "Hello Coders";
     }
 
-    @GetMapping("/coders")
+    @GetMapping("/products")
     List<Product> getAll() {
 
         var coderList = this.productRepository.findAll();
@@ -40,14 +49,14 @@ public class ProductController {
 //                        new Product("Alex", 3L));
 //    }
 
-    @GetMapping("/coders/{id}")
-    Product getById(@PathVariable Long id){
+    @GetMapping("/products/{id}")
+    ProductResponseDto getById(@PathVariable Long id){
 
-        var coder = productRepository.findById(id).get();
-        return coder;
+        var product = productService.getById(id);
+        return product;
     }
 
-    @GetMapping("/coders/search")
+    @GetMapping("/products/search")
     ResponseEntity<List<Product>> search(@RequestParam("name") String search){
 
         var filteredList = productRepository.findByNameContainsOrDescriptionContainsAllIgnoreCase(search,search);
@@ -55,12 +64,14 @@ public class ProductController {
         return new ResponseEntity<>(filteredList, HttpStatus.OK);
     }
 
-    @PostMapping("/coders")
-    Product createCoder(@RequestBody Product product) {
-        return productRepository.save(product);
+    @PostMapping("/products")
+    Product createCoder(@RequestBody ProductRequestDto productdto) {
+        productdto.setUser_id(1l);
+        var user=userService.findById(1L);
+        return productService.createProduct(productdto, user);
     }
 
-    @PutMapping("/coders/{id}")
+    @PutMapping("/products/{id}")
     ResponseEntity<Product> updateProduct (@PathVariable("id") Long id, @RequestBody Product product) {
         var dBProduct = productRepository.findById(id);
         if (dBProduct.isPresent()) {
