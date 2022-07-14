@@ -49,4 +49,9 @@ public class Product {
 
     }
 
+    public void addLike(Like like) {
+        if (this != like.getProduct()) return;
+        this.likes.add(like);
+    }
+
 }

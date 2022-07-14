@@ -32,4 +32,29 @@ class ProductTest {
     void productMustHaveAnAuthor() {
 
     }
+
+    @Test
+    void canCountProductLikes() {
+        var product = new Product();
+        var user = new User();
+        var like = new Like(user,product);
+        product.addLike(like);
+
+        var sut = product.likesCount();
+
+        assertThat(sut, equalTo(1));
+
+    }
+    @Test
+    void canNotAddAnOtherProductLike() {
+        var product = new Product();
+        var product2 = new Product();
+        var user = new User();
+        var like = new Like(user,product2);
+        product.addLike(like);
+
+        var sut = product.likesCount();
+
+        assertThat(sut, equalTo(0));
+    }
 }

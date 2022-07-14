@@ -1,12 +1,14 @@
 package com.factoria.coders.models;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
 @Entity
 @Table(name = "likes")
+@NoArgsConstructor
 public class Like {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,6 +18,11 @@ public class Like {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    public Like(User user, Product product) {
+        this.user = user;
+        this.product = product;
+    }
 
     @ManyToOne
     @JoinColumn(name = "product_id")
