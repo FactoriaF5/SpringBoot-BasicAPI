@@ -12,5 +12,6 @@ import lombok.NoArgsConstructor;
 public class ProductRequestDto {
     private  String name;
     private String description;
-    private Long user_id;
+
+
 }

@@ -2,10 +2,8 @@ package com.factoria.coders.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.beans.factory.annotation.Required;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -26,6 +24,7 @@ public class Product {
     private String description;
 
     @JsonIgnore
+    @Builder.Default
     @OneToMany(mappedBy = "product" , cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
 
@@ -35,14 +34,18 @@ public class Product {
     }
 
     @ManyToOne
+
     @JoinColumn(name = "user_id")
     private User author;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @Builder.Default
+    @JsonIgnore
     private List<Like> likes = new ArrayList<>();
 
-    public void addLike(User user) {
-        if (likes.contains(user)) return;
+    @JsonSerialize
+    public int likesCount() {
+        return likes.size();
 
     }
 

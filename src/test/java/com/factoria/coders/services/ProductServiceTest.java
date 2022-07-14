@@ -68,7 +68,7 @@ class ProductServiceTest {
         var productService = new ProductService(productRepository);
         Mockito.when(productRepository.save(any(Product.class))).thenReturn(product);
 
-        var productRequest = new ProductRequestDto("Product1","description",1L);
+        var productRequest = new ProductRequestDto("Product1","description");
 
         var sut = productService.createProduct(productRequest, authUser);
 //        sut.getName();

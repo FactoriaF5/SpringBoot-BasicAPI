@@ -66,7 +66,6 @@ public class ProductController {
 
     @PostMapping("/products")
     Product createCoder(@RequestBody ProductRequestDto productdto) {
-        productdto.setUser_id(1l);
         var user=userService.findById(1L);
         return productService.createProduct(productdto, user);
     }
