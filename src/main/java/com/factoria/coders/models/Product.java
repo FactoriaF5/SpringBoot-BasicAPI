@@ -54,4 +54,10 @@ public class Product {
         this.likes.add(like);
     }
 
+    public boolean isLovedBy(User user) {
+        var opLike = this.likes.stream().filter(like -> like.getUser() == user)
+                .findFirst();
+        if (opLike.isPresent()) return true;
+        return false;
+    }
 }

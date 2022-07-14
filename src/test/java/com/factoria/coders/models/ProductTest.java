@@ -57,4 +57,30 @@ class ProductTest {
 
         assertThat(sut, equalTo(0));
     }
+
+    @Test
+    void canKnowIfUserIsProductInLove() {
+        var product = new Product();
+        var user = new User();
+        var like = new Like(user,product);
+        product.addLike(like);
+
+        boolean sut = product.isLovedBy(user);
+
+        assertThat(sut, equalTo(true));
+    }
+
+    @Test
+    void canKnowIfUserIsNotProductInLove() {
+        var product = new Product();
+        var user = new User();
+        var user2 = new User();
+        var like = new Like(user,product);
+        product.addLike(like);
+
+        boolean sut = product.isLovedBy(user2);
+
+        assertThat(sut, equalTo(false));
+    }
+
 }
