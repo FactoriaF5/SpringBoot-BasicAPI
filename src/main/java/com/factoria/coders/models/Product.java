@@ -1,6 +1,7 @@
 package com.factoria.coders.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Required;
@@ -22,6 +23,10 @@ public class Product {
     private Long id;
     private  String name;
     private String description;
+
+    @JsonInclude
+    @Transient
+    private boolean liked = false;
 
     @JsonIgnore
     @Builder.Default
@@ -51,13 +56,17 @@ public class Product {
 
     public void addLike(Like like) {
         if (this != like.getProduct()) return;
+
         this.likes.add(like);
     }
 
     public boolean isLovedBy(User user) {
         var opLike = this.likes.stream().filter(like -> like.getUser() == user)
                 .findFirst();
-        if (opLike.isPresent()) return true;
+        if (opLike.isPresent()) {
+            this.liked = true;
+            return true;
+        }
         return false;
     }
 }

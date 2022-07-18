@@ -4,6 +4,7 @@ import com.factoria.coders.dtos.ProductRequestDto;
 import com.factoria.coders.models.Product;
 import com.factoria.coders.models.User;
 import com.factoria.coders.repositories.IProductRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -22,8 +23,14 @@ class ProductServiceTest {
     @MockBean
     IProductRepository productRepository;
 
+    @Mock
+    IUserService userService;
 
 
+    @BeforeEach
+    void before() {
+
+    }
 
     @Test
     void getAll() {
@@ -42,7 +49,7 @@ class ProductServiceTest {
 
     private ProductService createProductService() {
 
-        return new ProductService(productRepository);
+        return new ProductService(productRepository, userService);
     }
 
     private Product createTestProduct() {
@@ -65,7 +72,7 @@ class ProductServiceTest {
 
         var product = createTestProduct();
         product.setAuthor(authUser);
-        var productService = new ProductService(productRepository);
+        var productService = new ProductService(productRepository, userService);
         Mockito.when(productRepository.save(any(Product.class))).thenReturn(product);
 
         var productRequest = new ProductRequestDto("Product1","description");

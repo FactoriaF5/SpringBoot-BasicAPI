@@ -13,15 +13,21 @@ import java.util.List;
 @Service
 public class ProductService implements IProductService{
     IProductRepository productRepository;
+    IUserService userService;
 
-    public ProductService(IProductRepository productRepository) {
+    public ProductService(IProductRepository productRepository, IUserService userService) {
         this.productRepository = productRepository;
-
+        this.userService = userService;
     }
 
     @Override
-    public List<ProductResponseDto> getAll() {
-        return null;
+    public List<Product> getAll() {
+
+        var products = this.productRepository.findAll();
+        var authUser = userService.findById(1L);
+        products.stream().forEach(x-> x.isLovedBy(authUser));
+
+        return products;
     }
 
     @Override

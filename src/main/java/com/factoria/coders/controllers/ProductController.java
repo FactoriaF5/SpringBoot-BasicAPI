@@ -38,8 +38,7 @@ public class ProductController {
     @GetMapping("/products")
     List<Product> getAll() {
 
-        var coderList = this.productRepository.findAll();
-        return coderList;
+       return this.productService.getAll();
     }
 
 //    private List<Product> getCoderList() {
