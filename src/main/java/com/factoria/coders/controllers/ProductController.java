@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class ProductController {
@@ -49,10 +50,10 @@ public class ProductController {
 //    }
 
     @GetMapping("/products/{id}")
-    ProductResponseDto getById(@PathVariable Long id){
+    ResponseEntity<ProductResponseDto> getById(@PathVariable Long id){
 
         var product = productService.getById(id);
-        return product;
+        return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
     @GetMapping("/products/search")

@@ -2,10 +2,12 @@ package com.factoria.coders.services;
 
 import com.factoria.coders.dtos.ProductRequestDto;
 import com.factoria.coders.dtos.ProductResponseDto;
+import com.factoria.coders.exceptions.NotFoundException;
 import com.factoria.coders.mappers.ProductMapper;
 import com.factoria.coders.models.Product;
 import com.factoria.coders.models.User;
 import com.factoria.coders.repositories.IProductRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 
@@ -37,8 +39,17 @@ public class ProductService implements IProductService{
             var productResponse = new ProductMapper().mapToProductDTO(product.get());
             return productResponse;
         }
-        throw new RuntimeException("Product " + id + " Not Found");
+        throw new NotFoundException("product id:"+ id +" found", "p-321");
     }
+//    @Override
+//    public ProductResponseDto getById(Long id) {
+//        var product = productRepository.findById(id);
+//        if (product.isPresent()) {
+//            var productResponse = new ProductMapper().mapToProductDTO(product.get());
+//            return productResponse;
+//        }
+//        throw new RuntimeException("Product " + id + " Not Found");
+//    }
 
     @Override
     public List<Product> search() {
