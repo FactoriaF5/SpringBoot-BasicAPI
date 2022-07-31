@@ -4,6 +4,8 @@ import com.factoria.coders.dtos.ProductRequestDto;
 import com.factoria.coders.dtos.ProductResponseDto;
 import com.factoria.coders.models.Product;
 
+import java.util.HashMap;
+
 public class ProductMapper {
 
     public ProductResponseDto mapToProductDTO(Product product) {
@@ -11,6 +13,8 @@ public class ProductMapper {
         dto.setId(product.getId());
         dto.setName(product.getName());
         dto.setDescription(product.getDescription());
+        dto.setUser(product.getAuthor());
+
         return dto;
     };
 
