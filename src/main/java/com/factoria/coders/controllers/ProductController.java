@@ -1,5 +1,6 @@
 package com.factoria.coders.controllers;
 
+import com.factoria.coders.auth.facade.IAuthenticationFacade;
 import com.factoria.coders.dtos.ProductRequestDto;
 import com.factoria.coders.dtos.ProductResponseDto;
 import com.factoria.coders.faker.Faker;
@@ -12,6 +13,8 @@ import com.factoria.coders.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,10 +28,13 @@ public class ProductController {
 
     private IUserService userService;
 
-    public ProductController(IProductRepository productRepository, IProductService productService, IUserService userService) {
+    private IAuthenticationFacade authenticationFacade;
+
+    public ProductController(IProductRepository productRepository, IProductService productService, IUserService userService, IAuthenticationFacade authenticationFacade) {
         this.productRepository = productRepository;
         this.productService = productService;
         this.userService = userService;
+        this.authenticationFacade = authenticationFacade;
     }
 
     @GetMapping("/hello")
@@ -36,10 +42,11 @@ public class ProductController {
         return "Hello Coders";
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/products")
-    List<Product> getAll() {
+    ResponseEntity<List<Product>> getAll() {
 
-       return this.productService.getAll();
+       return new ResponseEntity<>(this.productService.getAll(), HttpStatus.OK);
     }
 
 //    private List<Product> getCoderList() {
@@ -64,9 +71,10 @@ public class ProductController {
         return new ResponseEntity<>(filteredList, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/products")
     Product createCoder(@RequestBody ProductRequestDto productdto) {
-        var user=userService.findById(1L);
+        var user=authenticationFacade.getAuthUser();
         return productService.createProduct(productdto, user);
     }
 

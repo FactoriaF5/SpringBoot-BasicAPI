@@ -40,3 +40,9 @@ INTO
   (User_id, roles_id)
 VALUES
   (1, 1);
+INSERT
+INTO
+  users_roles
+  (User_id, roles_id)
+VALUES
+  (NEXTVAL('1'), 2);

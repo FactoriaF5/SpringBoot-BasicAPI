@@ -28,7 +28,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/auth")
 public class AuthenticationController {
 
     private final UserRepository userRepository;
