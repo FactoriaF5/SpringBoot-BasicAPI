@@ -1,10 +1,7 @@
 -- INSERT USERS
- INSERT
-INTO
-  users
-  (user_Name, img)
-VALUES
-  ('Sergi', 'image');
+
+
+--- INSERT ROLES
 
 --  INSERT PRODUCTS
 INSERT
@@ -35,5 +32,11 @@ INSERT
 INTO
   likes
   (user_id, product_id)
+VALUES
+  (1, 1);
+INSERT
+INTO
+  users_roles
+  (User_id, roles_id)
 VALUES
   (1, 1);

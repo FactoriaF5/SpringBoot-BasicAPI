@@ -2,7 +2,6 @@ package com.factoria.coders.mappers;
 
 import com.factoria.coders.dtos.ProductRequestDto;
 import com.factoria.coders.models.Product;
-import com.factoria.coders.models.User;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;

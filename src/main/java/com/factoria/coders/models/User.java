@@ -1,20 +1,49 @@
 package com.factoria.coders.models;
 
-import lombok.Data;
+import com.factoria.coders.models.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 
-@Data
 @Entity
-@Table(name="users")
+@Table(name = "users")
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @GeneratedValue
     private Long id;
+    private String username;
 
-    private String userName;
+    private String email;
+    @JsonIgnore
+    private String password;
 
     private String img;
+    public User(String name) {
+        this.username = name;
+    }
+
+    @ManyToMany
+    private Set<Role> roles;
+
+
+    public User(long id, String name) {
+        this.username = name;
+        this.id = id;
+    }
+
+    public User(String username, String email, String encode) {
+        this.username = username;
+        this.email = email;
+        this.password = encode;
+    }
 
 }

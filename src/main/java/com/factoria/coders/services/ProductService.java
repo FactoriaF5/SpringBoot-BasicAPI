@@ -7,7 +7,6 @@ import com.factoria.coders.mappers.ProductMapper;
 import com.factoria.coders.models.Product;
 import com.factoria.coders.models.User;
 import com.factoria.coders.repositories.IProductRepository;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 
