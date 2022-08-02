@@ -3,22 +3,17 @@ package com.factoria.coders.controllers;
 import com.factoria.coders.auth.facade.IAuthenticationFacade;
 import com.factoria.coders.dtos.ProductRequestDto;
 import com.factoria.coders.dtos.ProductResponseDto;
-import com.factoria.coders.faker.Faker;
-import com.factoria.coders.models.Comment;
 import com.factoria.coders.models.Product;
-import com.factoria.coders.repositories.ICommentRepository;
 import com.factoria.coders.repositories.IProductRepository;
 import com.factoria.coders.services.IProductService;
 import com.factoria.coders.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class ProductController {
@@ -30,6 +25,7 @@ public class ProductController {
 
     private IAuthenticationFacade authenticationFacade;
 
+    @Autowired
     public ProductController(IProductRepository productRepository, IProductService productService, IUserService userService, IAuthenticationFacade authenticationFacade) {
         this.productRepository = productRepository;
         this.productService = productService;

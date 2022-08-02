@@ -31,7 +31,6 @@ public class RoleRepositoryInitializer {
         this.encoder = encoder;
     }
 
-    @Autowired
 
     @PostConstruct
     public void addAvailableRoles(){

@@ -7,7 +7,7 @@ import com.factoria.coders.auth.configuration.UserDetailsImplementation;
 import com.factoria.coders.models.Role;
 import com.factoria.coders.models.User;
 import com.factoria.coders.repositories.RoleRepository;
-import com.factoria.coders.repositories.UserRepository;
+import com.factoria.coders.repositories.AuthRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,7 +17,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 //import javax.validation.Valid;
@@ -30,7 +29,7 @@ import java.util.stream.Collectors;
 @RestController
 public class AuthenticationController {
 
-    private final UserRepository userRepository;
+    private final AuthRepository userRepository;
 
     private final RoleRepository roleRepository;
 
@@ -41,7 +40,7 @@ public class AuthenticationController {
     private final JwtUtils jwtUtils;
 
     @Autowired
-    public AuthenticationController(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder encoder, AuthenticationManager authenticationManager, JwtUtils jwtUtils) {
+    public AuthenticationController(AuthRepository userRepository, RoleRepository roleRepository, PasswordEncoder encoder, AuthenticationManager authenticationManager, JwtUtils jwtUtils) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.encoder = encoder;

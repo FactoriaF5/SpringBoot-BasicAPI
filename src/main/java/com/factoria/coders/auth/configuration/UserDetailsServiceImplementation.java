@@ -4,7 +4,7 @@ package com.factoria.coders.auth.configuration;
 
 
 import com.factoria.coders.models.User;
-import com.factoria.coders.repositories.UserRepository;
+import com.factoria.coders.repositories.AuthRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,10 +15,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserDetailsServiceImplementation implements UserDetailsService {
 
-    UserRepository userRepository;
+    AuthRepository userRepository;
 
     @Autowired
-    public UserDetailsServiceImplementation(UserRepository userRepository) {
+    public UserDetailsServiceImplementation(AuthRepository userRepository) {
         this.userRepository = userRepository;
     }
 
