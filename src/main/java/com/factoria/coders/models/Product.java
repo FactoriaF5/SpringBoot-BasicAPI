@@ -23,7 +23,7 @@ public class Product {
     private Long id;
     private  String name;
     private String description;
-
+    private String img;
     @JsonInclude
     @Transient
     private boolean liked = false;
@@ -39,7 +39,6 @@ public class Product {
     }
 
     @ManyToOne
-
     @JoinColumn(name = "user_id")
     private User author;
 

@@ -31,6 +31,7 @@ public class SeedDataService {
         var user = userRepository.findById(1L).get();
         var product = new Product();
         product.setAuthor(user);
+        product.setImg("https://cdn.pixabay.com/photo/2016/10/09/10/43/plan-1725510_1280.jpg");
         product.setName("testProduct");
         productRepository.save(product);
     }

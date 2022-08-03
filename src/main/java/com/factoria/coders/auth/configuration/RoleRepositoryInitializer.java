@@ -50,12 +50,20 @@ public class RoleRepositoryInitializer {
             return;
         }
 
-        var user = new User();
-        user.setRoles(roleRepository.findAll().stream().collect(Collectors.toSet()));
-        user.setEmail("admin@admin.com");
-        user.setUsername("Admin");
-        user.setPassword(encoder.encode("12345678"));
+        var userAdmin = new User();
+        userAdmin.setRoles(roleRepository.findAll().stream().collect(Collectors.toSet()));
+        userAdmin.setEmail("admin@admin.com");
+        userAdmin.setUsername("Admin");
+        userAdmin.setPassword(encoder.encode("12345678"));
 
-        userRepository.save(user);
+        var userUser = new User();
+        userUser.setRoles(Set.of(roleRepository.findByName(Role.RoleName.ROLE_USER).get()));
+        userUser.setEmail("user@user.com");
+        userUser.setUsername("User");
+        userUser.setPassword(encoder.encode("12345678"));
+
+        var users = List.of(userAdmin,userUser);
+
+        userRepository.saveAll(users);
     }
 }
