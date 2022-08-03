@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin("http://localhost:3000")
 public class ProductController {
 
     private IProductRepository productRepository;
@@ -37,8 +38,6 @@ public class ProductController {
     String hello() {
         return "Hello Coders";
     }
-
-    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/products")
     ResponseEntity<List<Product>> getAll() {
 
@@ -72,6 +71,16 @@ public class ProductController {
     Product createCoder(@RequestBody ProductRequestDto productdto) {
         var user=authenticationFacade.getAuthUser();
         return productService.createProduct(productdto, user);
+    }
+
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @DeleteMapping("/products/{id}")
+    ResponseEntity<Void> deleteProduct(@PathVariable("id") Long id) {
+        var product = productRepository.findById(id).get();
+        var auth = authenticationFacade.getAuthUser();
+        if (product.getAuthor().getId() != auth.getId()) throw new RuntimeException("Not authorized") ;
+        productRepository.delete(product);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping("/products/{id}")
