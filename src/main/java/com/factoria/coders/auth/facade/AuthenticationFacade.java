@@ -7,13 +7,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public class AuthenticationFacade implements IAuthenticationFacade {
     @Autowired
     AuthRepository userRepository;
 
-    public User getAuthUser() {
+    public Optional<User> getAuthUser() {
+
         var userName = SecurityContextHolder.getContext().getAuthentication().getName();
-        return userRepository.findByUsername(userName).get();
+
+        return userRepository.findByUsername(userName);
+    }
+
+    //TODO:  implements isAuthenticated function
+    public boolean isAuthenticated() {
+
+        return true;
     }
 }

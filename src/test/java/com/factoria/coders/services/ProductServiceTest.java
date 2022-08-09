@@ -1,5 +1,6 @@
 package com.factoria.coders.services;
 
+import com.factoria.coders.auth.facade.IAuthenticationFacade;
 import com.factoria.coders.dtos.ProductRequestDto;
 import com.factoria.coders.models.Product;
 import com.factoria.coders.models.User;
@@ -20,16 +21,22 @@ import static org.mockito.ArgumentMatchers.any;
 @SpringBootTest
 class ProductServiceTest {
 
-    @MockBean
+    @Mock
     IProductRepository productRepository;
-
     @Mock
     IUserService userService;
-
+    @Mock
+    IAuthenticationFacade authenticationFacade;
+    IProductService productService;
 
     @BeforeEach
     void before() {
+        this.productService = this.createProductService();
+    }
 
+    private ProductService createProductService() {
+
+        return new ProductService(productRepository, userService, authenticationFacade);
     }
 
     @Test
@@ -47,10 +54,7 @@ class ProductServiceTest {
         assertThat(1L, equalTo(sut.getId()));
     }
 
-    private ProductService createProductService() {
 
-        return new ProductService(productRepository, userService);
-    }
 
     private Product createTestProduct() {
         var product = new Product();
@@ -72,7 +76,6 @@ class ProductServiceTest {
 
         var product = createTestProduct();
         product.setAuthor(authUser);
-        var productService = new ProductService(productRepository, userService);
         Mockito.when(productRepository.save(any(Product.class))).thenReturn(product);
 
         var productRequest = new ProductRequestDto("Product1","description");

@@ -10,6 +10,7 @@ import com.factoria.coders.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,17 +40,11 @@ public class ProductController {
         return "Hello Coders";
     }
     @GetMapping("/products")
+
     ResponseEntity<List<Product>> getAll() {
 
        return new ResponseEntity<>(this.productService.getAll(), HttpStatus.OK);
     }
-
-//    private List<Product> getCoderList() {
-//        return List.of
-//                (new Product("Alex",1L),
-//                        new Product("marta", 2L),
-//                        new Product("Alex", 3L));
-//    }
 
     @GetMapping("/products/{id}")
     ResponseEntity<ProductResponseDto> getById(@PathVariable Long id){
@@ -70,14 +65,14 @@ public class ProductController {
     @PostMapping("/products")
     Product createCoder(@RequestBody ProductRequestDto productdto) {
         var user=authenticationFacade.getAuthUser();
-        return productService.createProduct(productdto, user);
+        return productService.createProduct(productdto, user.get());
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @DeleteMapping("/products/{id}")
     ResponseEntity<Void> deleteProduct(@PathVariable("id") Long id) {
         var product = productRepository.findById(id).get();
-        var auth = authenticationFacade.getAuthUser();
+        var auth = authenticationFacade.getAuthUser().get();
         if (product.getAuthor().getId() != auth.getId()) throw new RuntimeException("Not authorized") ;
         productRepository.delete(product);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

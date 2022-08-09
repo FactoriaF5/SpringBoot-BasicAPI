@@ -1,5 +1,6 @@
 package com.factoria.coders.services;
 
+import com.factoria.coders.auth.facade.IAuthenticationFacade;
 import com.factoria.coders.dtos.ProductRequestDto;
 import com.factoria.coders.dtos.ProductResponseDto;
 import com.factoria.coders.exceptions.NotFoundException;
@@ -16,18 +17,27 @@ public class ProductService implements IProductService{
     IProductRepository productRepository;
     IUserService userService;
 
-    public ProductService(IProductRepository productRepository, IUserService userService) {
+    IAuthenticationFacade authenticationFacade;
+
+    public ProductService(IProductRepository productRepository, IUserService userService, IAuthenticationFacade authenticationFacade) {
         this.productRepository = productRepository;
         this.userService = userService;
+        this.authenticationFacade = authenticationFacade;
     }
 
     @Override
     public List<Product> getAll() {
 
         var products = this.productRepository.findAll();
-        var authUser = userService.findById(1L);
-        products.stream().forEach(x-> x.isLovedBy(authUser));
+        var authUser = authenticationFacade.getAuthUser();
+        if(!authUser.isPresent()) return products;
 
+//
+////
+        if (authUser != null)
+            products.stream().forEach(x-> x.isLovedBy(authUser.get()));
+//
+//        return products;
         return products;
     }
 

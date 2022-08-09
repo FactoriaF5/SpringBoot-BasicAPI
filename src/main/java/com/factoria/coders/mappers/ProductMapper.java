@@ -22,6 +22,7 @@ public class ProductMapper {
         var product = new Product();
         product.setName(productRequestDto.getName());
         product.setDescription(productRequestDto.getDescription());
+        product.setImg(productRequestDto.getImageURL());
         return product;
     }
 
