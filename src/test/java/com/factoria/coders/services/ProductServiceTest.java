@@ -78,7 +78,10 @@ class ProductServiceTest {
         product.setAuthor(authUser);
         Mockito.when(productRepository.save(any(Product.class))).thenReturn(product);
 
-        var productRequest = new ProductRequestDto("Product1","description");
+        var productRequest =  ProductRequestDto
+                .builder()
+                .name("Product1")
+                .build();
 
         var sut = productService.createProduct(productRequest, authUser);
 //        sut.getName();
