@@ -3,8 +3,8 @@ spring:
     name: todo-app
   datasource:
     driver-class-name: org.h2.Driver
-    username: a
-    password: a
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     url: "jdbc:h2:mem:todoapp;DB_CLOSE_ON_EXIT=FALSE"
   h2:
     console:
@@ -18,5 +18,5 @@ spring:
       ddl-auto: create-drop
 bookshelf:
   app:
-    jwtSecret: xGVgsxuqBU3xuv9J
+    jwtSecret: ${JWT_SECRET}
     expirationMs: 86400000
