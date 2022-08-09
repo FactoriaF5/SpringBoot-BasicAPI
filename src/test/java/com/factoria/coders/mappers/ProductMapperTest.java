@@ -37,7 +37,7 @@ class ProductMapperTest {
 
         var sut = mapper.mapToProduct(productDto);
 
-        assertEquals(productDto.getName(), "falso");
+        assertEquals(productDto.getName(), sut.getName());
 
     }
 }
