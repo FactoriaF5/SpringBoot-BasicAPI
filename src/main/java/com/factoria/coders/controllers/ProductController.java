@@ -39,6 +39,7 @@ public class ProductController {
     String hello() {
         return "Hello Coders";
     }
+
     @GetMapping("/products")
 
     ResponseEntity<List<Product>> getAll() {

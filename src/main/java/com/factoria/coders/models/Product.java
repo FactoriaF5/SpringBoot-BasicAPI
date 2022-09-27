@@ -26,6 +26,7 @@ public class Product {
     private String img;
     @JsonInclude
     @Transient
+    @Builder.Default
     private boolean liked = false;
 
     @JsonIgnore
