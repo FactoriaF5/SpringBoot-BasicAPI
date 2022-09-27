@@ -73,7 +73,11 @@ class ProductControllerTest {
     }
 
     @Test
+<<<<<<< HEAD
     void allUsersCanGetAListOfProducts_GetAll() throws Exception {
+=======
+    void getAll() throws Exception {
+>>>>>>> 6aad82e7331c208146b607af0f89924ef8b5e00c
         var product = new Product();
         product.setName("TestProduct");
 
@@ -94,7 +98,11 @@ class ProductControllerTest {
     //MOCKING USER WITH ROLES
     @WithMockUser(roles = {"USER"})
     @Test
+<<<<<<< HEAD
     void userWithUserRoleCanCreateProduct() throws Exception {
+=======
+    void createCoder() throws Exception {
+>>>>>>> 6aad82e7331c208146b607af0f89924ef8b5e00c
 
         Product product = new Product();
         ProductRequestDto productReq = new ProductRequestDto();
