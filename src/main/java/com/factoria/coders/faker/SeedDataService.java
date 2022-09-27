@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 
 
-@Component
+@Component("")
 public class SeedDataService {
 
 
@@ -31,7 +31,6 @@ public class SeedDataService {
     @PostConstruct
     public void createData() {
         if (!productRepository.findAll().isEmpty()) return;
-
         var user = userRepository.findById(1L).get();
         var product = new Product();
         product.setAuthor(user);
